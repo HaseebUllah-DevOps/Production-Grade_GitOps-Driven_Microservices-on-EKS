@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ImageUpdateAutomation
+metadata:
+  name: boutique-image-updater
+  namespace: argocd
+spec:
+  interval: 1m
+
+  applicationRef:
+    name: boutique-app  
+
+  updateStrategy:
+    type: newest-build
+
+  allowTags: "regexp:^v0\\.10\\.0$"
+
+  images:
+    - name: ghcr.io/haseebullah-devops/microservices-demo/adservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/cartservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/checkoutservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/currencyservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/emailservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/frontend
+    - name: ghcr.io/haseebullah-devops/microservices-demo/paymentservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/productcatalogservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/recommendationservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/shippingservice
+    - name: ghcr.io/haseebullah-devops/microservices-demo/loadgenerator

@@ -1,0 +1,238 @@
+images:
+  adservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/adservice
+    tag: v0.10.0
+
+  cartservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/cartservice
+    tag: v0.10.0
+
+  checkoutservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/checkoutservice
+    tag: v0.10.0
+
+  currencyservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/currencyservice
+    tag: v0.10.0
+
+  emailservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/emailservice
+    tag: v0.10.0
+
+  frontend:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/frontend
+    tag: v0.10.0
+
+  loadgenerator:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/loadgenerator
+    tag: v0.10.0
+
+  paymentservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/paymentservice
+    tag: v0.10.0
+
+  productcatalogservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/productcatalogservice
+    tag: v0.10.0
+
+  recommendationservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/recommendationservice
+    tag: v0.10.0
+
+  shippingservice:
+    repository: ghcr.io/haseebullah-devops/microservices-demo/shippingservice
+    tag: v0.10.0
+
+serviceAccounts:
+  create: true
+  annotations: {}
+  annotationsOnlyForCartservice: false
+
+networkPolicies:
+  create: false
+
+sidecars:
+  create: false
+
+authorizationPolicies:
+  create: false
+
+opentelemetryCollector:
+  create: false
+  name: opentelemetrycollector
+  projectId: "PROJECT_ID"
+
+googleCloudOperations:
+  profiler: false
+  tracing: false
+  metrics: false
+
+seccompProfile:
+  enable: false
+  type: RuntimeDefault
+
+securityContext:
+  enable: true
+
+adService:
+  create: true
+  name: adservice
+  resources:
+    requests:
+      cpu: 200m
+      memory: 180Mi
+    limits:
+      cpu: 300m
+      memory: 300Mi
+
+cartService:
+  create: true
+  name: cartservice
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+checkoutService:
+  create: true
+  name: checkoutservice
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+currencyService:
+  create: true
+  name: currencyservice
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+emailService:
+  create: true
+  name: emailservice
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+frontend:
+  create: true
+  name: frontend
+  externalService: false
+  cymbalBranding: false
+  platform: aws
+  singleSharedSession: false
+
+  virtualService:
+    create: false
+    hosts:
+      - "*"
+    gateway:
+      name: asm-ingressgateway
+      namespace: asm-ingress
+      labelKey: asm
+      labelValue: ingressgateway
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+loadGenerator:
+  create: true
+  name: loadgenerator
+  checkFrontendInitContainer: true
+
+  resources:
+    requests:
+      cpu: 300m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+paymentService:
+  create: true
+  name: paymentservice
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+productCatalogService:
+  create: true
+  name: productcatalogservice
+  extraLatency: ""
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+recommendationService:
+  create: true
+  name: recommendationservice
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 220Mi
+    limits:
+      cpu: 200m
+      memory: 450Mi
+
+shippingService:
+  create: true
+  name: shippingservice
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+cartDatabase:
+  type: redis
+  connectionString: "redis-cart:6379"
+
+  inClusterRedis:
+    create: true
+    name: redis-cart
+    publicRepository: true
+
+  externalRedisTlsOrigination:
+    enable: false
+    name: exernal-redis-tls-origination
+    endpointAddress: ""
+    endpointPort: ""
+    certificate: ""
+
+shoppingAssistantService:
+  create: false
+  name: shoppingassistantservice
